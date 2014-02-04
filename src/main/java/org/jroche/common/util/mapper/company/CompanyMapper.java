@@ -30,6 +30,10 @@ public class CompanyMapper {
 			uiBean.setModifiedBy(company.getModifiedBy());
 			uiBean.setModifiedDate(company.getModifiedDate());
 			uiBean.setNotes(company.getNotes());
+			uiBean.setPurchases(company.isPurchases());
+			uiBean.setSales(company.isSales());
+			uiBean.setOrders(company.isOrders());
+			uiBean.setThirdParties(company.isThirdParties());
 		}
 
 		return uiBean;
@@ -71,6 +75,18 @@ public class CompanyMapper {
 			company.setModifiedBy(uiBean.getModifiedBy());
 			company.setModifiedDate(uiBean.getModifiedDate());
 			company.setNotes(uiBean.getNotes());
+			
+			company.setCardName(uiBean.getCardName());
+			company.setCardNumber(uiBean.getCardNumber());
+			company.setCardType(uiBean.getCardType());
+			company.setIssuDate(uiBean.getIssuDate());
+			company.setExpDate(uiBean.getExpDate());
+			company.setSecCode(uiBean.getSecCode());
+			
+			company.setSales(uiBean.isSales());
+			company.setPurchases(uiBean.isPurchases());
+			company.setOrders(uiBean.isOrders());
+			company.setThirdParties(uiBean.isThirdParties());
 		}
 		return company;
 	}

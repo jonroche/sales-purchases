@@ -1,15 +1,12 @@
 package org.jroche.persistence.model.user;
 
 import java.util.Date;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -31,6 +28,18 @@ public class Company {
 	private String description;
 	private String notes;
 
+	private String cardNumber;
+	private String cardName;
+	private String cardType;
+	private String issuDate;
+	private String expDate;
+	private String secCode;
+	
+	private Boolean sales = false;
+	private Boolean purchases = false;
+	private Boolean orders = false;
+	private Boolean thirdParties = false;
+
 	@Temporal(TemporalType.DATE)
 	private Date createdDate;
 	@Temporal(TemporalType.DATE)
@@ -39,18 +48,17 @@ public class Company {
 	private int modifiedBy;
 	@Temporal(TemporalType.DATE)
 	private Date lastLoggedIn;
-	
-	
-	//@OneToMany(mappedBy = "company", fetch = FetchType.EAGER)
-	//private Set<Customer> customers;
 
 	public static enum COLUMNS {
-		COMPANYID, PASSWORD, COMPANYNAME, COMPANYADDRESS, COMPANYPHONE, EMAIL, DESCRIPTION, NOTES, CREATEDBY, CREATEDDATE, MODIFIEDBY, MODIFIEDDATE, LASTLOGGEDIN
+		COMPANYID, PASSWORD, COMPANYNAME, COMPANYADDRESS, COMPANYPHONE, EMAIL, DESCRIPTION, NOTES, CREATEDBY, CREATEDDATE, MODIFIEDBY, MODIFIEDDATE, LASTLOGGEDIN,
+		CARDNUMBER, CARDNAME, CARDTYPE, ISSUDATE, EXPDATE, SECCODE,
+		SALES, PURCHASES, ORDER, THIRDPARTIES
 	}
 
 	public Company(Long id, String companyId, String password,
 			String companyName, String companyAddress, String companyPhone,
-			String email, String description, String notes) {
+			String email, String description, String notes, final String cardNumber, final String cardName, final String cardType,
+			final String issuDate, final String expDate, final String secCode, final boolean sales, final boolean purchases, final boolean orders, final boolean thirdParties) {
 		super();
 		this.id = id;
 		this.companyId = companyId;
@@ -61,6 +69,16 @@ public class Company {
 		this.email = email;
 		this.description = description;
 		this.notes = notes;
+		this.cardName = cardName;
+		this.cardNumber = cardNumber;
+		this.cardType = cardType;
+		this.issuDate = issuDate;
+		this.expDate = expDate;
+		this.secCode = secCode;
+		this.sales = sales;
+		this.purchases = purchases;
+		this.orders = orders;
+		this.thirdParties = thirdParties;
 	}
 
 	public Company() {
@@ -177,6 +195,87 @@ public class Company {
 
 	public void setLastLoggedIn(Date lastLoggedIn) {
 		this.lastLoggedIn = lastLoggedIn;
+	}
+	
+
+	public String getCardNumber() {
+		return cardNumber;
+	}
+
+	public void setCardNumber(String cardNumber) {
+		this.cardNumber = cardNumber;
+	}
+
+	public String getCardName() {
+		return cardName;
+	}
+
+	public void setCardName(String cardName) {
+		this.cardName = cardName;
+	}
+
+	public String getCardType() {
+		return cardType;
+	}
+
+	public void setCardType(String cardType) {
+		this.cardType = cardType;
+	}
+
+	public String getIssuDate() {
+		return issuDate;
+	}
+
+	public void setIssuDate(String issuDate) {
+		this.issuDate = issuDate;
+	}
+
+	public String getExpDate() {
+		return expDate;
+	}
+
+	public void setExpDate(String expDate) {
+		this.expDate = expDate;
+	}
+
+	public String getSecCode() {
+		return secCode;
+	}
+
+	public void setSecCode(String secCode) {
+		this.secCode = secCode;
+	}
+
+	public boolean isSales() {
+		return sales;
+	}
+
+	public void setSales(boolean sales) {
+		this.sales = sales;
+	}
+
+	public boolean isPurchases() {
+		return purchases;
+	}
+
+	public void setPurchases(boolean purchases) {
+		this.purchases = purchases;
+	}
+
+	public boolean isOrders() {
+		return orders;
+	}
+
+	public void setOrders(boolean orders) {
+		this.orders = orders;
+	}
+
+	public boolean isThirdParties() {
+		return thirdParties;
+	}
+
+	public void setThirdParties(boolean thirdParties) {
+		this.thirdParties = thirdParties;
 	}
 	
 	/*public Set<Customer> getCustomers() {

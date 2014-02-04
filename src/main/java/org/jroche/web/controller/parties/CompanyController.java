@@ -1,11 +1,13 @@
 package org.jroche.web.controller.parties;
 
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.jroche.common.util.extjs.ResponseMap;
 import org.jroche.service.company.CompanyService;
 import org.jroche.web.model.user.CompanyUI;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/company")
 public class CompanyController {
+	
+	private Logger logger = Logger.getAnonymousLogger();
+	
 	@Autowired
 	private CompanyService service;
 
@@ -27,6 +32,30 @@ public class CompanyController {
 		model.addAttribute("operationName", "add");
 
 		return "company/add";
+	}
+	
+	@RequestMapping(value = "/isSales", method = RequestMethod.GET)
+	public @ResponseBody String isSales(Model model) throws Exception {
+		String sales = null;
+		try {
+			logger.info("IN THE IS_SALES_ENABLED FUNCTION");
+			sales = String.valueOf(service.findByCompanyName(SecurityContextHolder.getContext().getAuthentication().getName()).isSales());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return sales;
+	}
+	
+	@RequestMapping(value = "/isPurchases", method = RequestMethod.GET)
+	public @ResponseBody String isPurchases(Model model) throws Exception {
+		String pur = null;
+		try {
+			pur = String.valueOf(service.findByCompanyName(SecurityContextHolder.getContext().getAuthentication().getName()).isPurchases());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return pur;
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)

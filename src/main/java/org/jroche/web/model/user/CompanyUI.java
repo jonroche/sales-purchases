@@ -27,7 +27,67 @@ public class CompanyUI {
 	private int createadBy;
 	private int modifiedBy;
 	private Date lastLoggedIn;
+	
+	private String cardNumber;
+	private String cardName;
+	private String cardType;
+	private String issuDate;
+	private String expDate;
+	private String secCode;
+	
+	private boolean sales = false;
+	private boolean purchases = false;
+	private boolean orders = false;
+	private boolean thirdParties = false;
 
+
+	public String getCardNumber() {
+		return cardNumber;
+	}
+
+	public void setCardNumber(String cardNumber) {
+		this.cardNumber = cardNumber;
+	}
+
+	public String getCardName() {
+		return cardName;
+	}
+
+	public void setCardName(String cardName) {
+		this.cardName = cardName;
+	}
+
+	public String getCardType() {
+		return cardType;
+	}
+
+	public void setCardType(String cardType) {
+		this.cardType = cardType;
+	}
+
+	public String getIssuDate() {
+		return issuDate;
+	}
+
+	public void setIssuDate(String issuDate) {
+		this.issuDate = issuDate;
+	}
+
+	public String getExpDate() {
+		return expDate;
+	}
+
+	public void setExpDate(String expDate) {
+		this.expDate = expDate;
+	}
+
+	public String getSecCode() {
+		return secCode;
+	}
+
+	public void setSecCode(String secCode) {
+		this.secCode = secCode;
+	}
 
 	public CompanyUI() {
 	}
@@ -37,7 +97,9 @@ public class CompanyUI {
 			String companyAddress, String companyPhone,
 			String email, String description, String notes, Date createdDate,
 			Date modifiedDate, int createadBy, int modifiedBy,
-			Date lastLoggedIn) {
+			Date lastLoggedIn, final String cardNumber, final String cardName, final String cardType,
+			final String issuDate, final String expDate, final String secCode,
+			final boolean sales, final boolean purchases, final boolean orders, final boolean thirdParties) {
 		super();
 		this.id = id;
 		this.companyId = companyId;
@@ -56,7 +118,49 @@ public class CompanyUI {
 		this.createadBy = createadBy;
 		this.modifiedBy = modifiedBy;
 		this.lastLoggedIn = lastLoggedIn;
+		this.cardName = cardName;
+		this.cardNumber = cardNumber;
+		this.cardType = cardType;
+		this.issuDate = issuDate;
+		this.expDate = expDate;
+		this.secCode = secCode;
+		this.sales = sales;
+		this.purchases = purchases;
+		this.orders = orders;
+		this.thirdParties = thirdParties;
 	
+	}
+
+	public boolean isSales() {
+		return sales;
+	}
+
+	public void setSales(boolean sales) {
+		this.sales = sales;
+	}
+
+	public boolean isPurchases() {
+		return purchases;
+	}
+
+	public void setPurchases(boolean purchases) {
+		this.purchases = purchases;
+	}
+
+	public boolean isOrders() {
+		return orders;
+	}
+
+	public void setOrders(boolean orders) {
+		this.orders = orders;
+	}
+
+	public boolean isThirdParties() {
+		return thirdParties;
+	}
+
+	public void setThirdParties(boolean thirdParties) {
+		this.thirdParties = thirdParties;
 	}
 
 	public CompanyUI(String companyName) {
@@ -196,6 +300,11 @@ public class CompanyUI {
 		result.append(" createadBy:" + createadBy);
 		result.append(" modifiedBy:" + modifiedBy);
 		result.append(" lastLoggedIn:" + lastLoggedIn);
+		
+		result.append(" sales:" + sales);
+		result.append(" purchases:" + purchases);
+		result.append(" orders:" + orders);
+		result.append(" thirdParties:" + thirdParties);
 		
 		return result.toString();
 	}
