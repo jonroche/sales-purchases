@@ -18,6 +18,25 @@
 Ext.onReady(function() 
 {
     Ext.QuickTips.init();
+    
+    var paymentType = Ext.create('Ext.data.ArrayStore', {
+        fields: ['Type'],    
+        data: [
+            [ 'Mastercard' ],
+            [ 'Visa' ],
+            [ 'American Express' ],
+            [ 'Laser' ]
+        ]
+    });
+    
+    var paymentCombo = Ext.create('Ext.form.field.ComboBox', {
+        fieldLabel: 'type',
+        displayField: 'Type',
+        store: paymentType,
+        valueField: 'Type',
+        renderTo: Ext.getBody()
+    });
+    
 	var companyDetailsForm = Ext.create('Ext.form.Panel',
 	{
 	    bodyStyle:'padding:5px', labelWidth : 80, monitorValid : true, fieldDefaults: { labelAlign: 'left', msgTarget: 'side', labelWidth: 100, labelStyle: 'font-weight:bold' },
@@ -49,7 +68,7 @@ Ext.onReady(function()
 				    {   columnWidth:.5, border:false, layout: 'anchor', defaultType: 'textfield',
 						items: 
 						[
-							{ fieldLabel: 'Phone', name : 'companyPhone', anchor:'95%', allowBlank : false },
+							{ fieldLabel: 'Phone', name : 'companyPhone', anchor:'95%', allowBlank : false, maskRe: /[0-9.]/ },
 							{ fieldLabel: 'Email', name : 'email', vtype:'email', anchor:'95%' }
 						]
 					},
@@ -87,16 +106,22 @@ Ext.onReady(function()
 						items: 
 						[
 							{ fieldLabel: 'Card Name', name : 'cardName', anchor:'95%', allowBlank : false },
-							{ fieldLabel: 'Card Type', name : 'cardType', anchor:'95%', allowBlank : false },
-							{ fieldLabel: 'Card Number', name : 'cardNumber', anchor:'95%', allowBlank : false }
+							{ fieldLabel: 'Card Type', store: [
+								['val1' , 'Mastercard'], 
+								['val2' , 'Visa'],
+								['val3' , 'American Express'],
+								['val4' , 'Laser']
+								],
+							name : 'cardType', anchor:'95%', xtype: 'combobox', allowBlank : false },
+							{ fieldLabel: 'Card Number', name : 'cardNumber', anchor:'95%', allowBlank : false, maskRe: /[0-9.]/ }
 						]
 					},
 					{  columnWidth:.5, border:false, layout: 'anchor', defaultType: 'textfield',
 						items: 
 						[
-							{ fieldLabel: 'Issuing Date', name : 'issuDate', anchor:'95%', allowBlank : false },
-							{ fieldLabel: 'Expiry Date', name : 'expDate', anchor:'95%', allowBlank : false },
-							{ fieldLabel: 'Security Code', name : 'securityCode', anchor:'95%', allowBlank : false }
+							{ fieldLabel: 'Issuing Date', name : 'issuDate', xtype: 'datefield', anchor:'95%', allowBlank : false },
+							{ fieldLabel: 'Expiry Date', name : 'expDate', xtype: 'datefield', anchor:'95%', allowBlank : false },
+							{ fieldLabel: 'Security Code', name : 'securityCode', anchor:'95%', allowBlank : false, maskRe: /[0-9.]/  }
 						]
 					} 
 				]

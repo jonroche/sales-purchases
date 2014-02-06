@@ -1,6 +1,6 @@
 rem mvn clean install
-rm C:\Tools\springsource\vfabric-tc-server-developer-2.8.2.RELEASE\base-instance\webapps\yourbusinesssolutions.war
-rmdir /S C:\Tools\springsource\vfabric-tc-server-developer-2.8.2.RELEASE\base-instance\webapps\yourbusinesssolutions
+rm "C:\Tools\STS 3.5M2\vfabric-tc-server-developer-2.9.4.RELEASE\base-instance\webapps\yourbusinesssolutions.war"
+rmdir /S "C:\Tools\STS 3.5M2\vfabric-tc-server-developer-2.9.4.RELEASE\base-instance\webapps\yourbusinesssolutions"
 cd target
-cp yourbusinesssolutions.war C:\Tools\springsource\vfabric-tc-server-developer-2.8.2.RELEASE\base-instance\webapps\
-cd C:\Workspace\SoSaaSOA\SoSaaSOA
+cp yourbusinesssolutions.war "C:\Tools\STS 3.5M2\vfabric-tc-server-developer-2.9.4.RELEASE\base-instance\webapps\"
+cd C:\UDS\SoSaaSOA\SoSaaSOA

@@ -8,7 +8,6 @@
 	<packaging>war</packaging>
 
 	<name>Your Business Solutions</name>
-	<url>http://maven.apache.org</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -106,9 +105,7 @@
 			<artifactId>aspectjweaver</artifactId>
 			<version>${aspectj.version}</version>
 		</dependency>
-
-		<!-- Cglib is a powerful, high performance and quality Code Generation 
-			Library, It is used to extend JAVA classes and implements interfaces at runtime. -->
+		<!-- Cglib is a powerful, high performance and quality Code Generation Library, It is used to extend JAVA classes and implements interfaces at runtime. -->
 		<dependency>
 			<groupId>cglib</groupId>
 			<artifactId>cglib-nodep</artifactId>
