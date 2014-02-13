@@ -2,6 +2,8 @@ package org.jroche.web.model.product;
 
 import java.util.Date;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+
 public class ProductGroupUI {
 
 	private Long id;
@@ -11,9 +13,10 @@ public class ProductGroupUI {
 	private Date modifiedDate;
 	private int createadBy;
 	private int modifiedBy;
+	private String companyId;
 
 	public ProductGroupUI(Long id, String groupName, String description,
-			Date createdDate, Date modifiedDate, int createadBy, int modifiedBy) {
+			Date createdDate, Date modifiedDate, int createadBy, int modifiedBy, String companyId) {
 		super();
 		this.id = id;
 		this.groupName = groupName;
@@ -22,10 +25,11 @@ public class ProductGroupUI {
 		this.modifiedDate = modifiedDate;
 		this.createadBy = createadBy;
 		this.modifiedBy = modifiedBy;
+		this.companyId = companyId;
 	}
 
 	public ProductGroupUI() {
-
+		this.companyId = SecurityContextHolder.getContext().getAuthentication().getName();
 	}
 
 	public Long getId() {
@@ -82,6 +86,14 @@ public class ProductGroupUI {
 
 	public void setModifiedBy(int modifiedBy) {
 		this.modifiedBy = modifiedBy;
+	}
+	
+	public String getCompanyId() {
+		return companyId;
+	}
+	
+	public void setCompanyId(String companyId) {
+		this.companyId = companyId;
 	}
 
 	@Override

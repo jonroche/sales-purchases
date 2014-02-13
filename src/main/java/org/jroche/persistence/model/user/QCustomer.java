@@ -57,6 +57,8 @@ public class QCustomer extends EntityPathBase<Customer> {
     public final SetPath<org.jroche.persistence.model.order.purchase.PurchaseOrder, org.jroche.persistence.model.order.purchase.QPurchaseOrder> purchaseOrder = this.<org.jroche.persistence.model.order.purchase.PurchaseOrder, org.jroche.persistence.model.order.purchase.QPurchaseOrder>createSet("purchaseOrder", org.jroche.persistence.model.order.purchase.PurchaseOrder.class, org.jroche.persistence.model.order.purchase.QPurchaseOrder.class);
 
     public final QRole role;
+    
+    public final StringPath companyId = createString("companyId");
 
     public final StringPath username = createString("username");
 
@@ -78,6 +80,7 @@ public class QCustomer extends EntityPathBase<Customer> {
         super(type, metadata, inits);
         this.balance = inits.isInitialized("balance") ? new QUserBalance(forProperty("balance"), inits.get("balance")) : null;
         this.role = inits.isInitialized("role") ? new QRole(forProperty("role"), inits.get("role")) : null;
+        //this.company = inits.isInitialized("company") ? new QCompany(forProperty("comany"), inits.get("company")) : null;
     }
 
 }

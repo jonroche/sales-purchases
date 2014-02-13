@@ -17,6 +17,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.jroche.persistence.model.user.Customer;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @Entity(name = "purchaseOrder")
 public class PurchaseOrder {
@@ -43,6 +44,8 @@ public class PurchaseOrder {
 	private Date modifiedDate;
 	private int createadBy;
 	private int modifiedBy;
+	
+	private String companyId;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="accountId")
@@ -80,10 +83,12 @@ public class PurchaseOrder {
 		this.items = items;
 		this.charges = charges;
 		this.taxes = taxes;
+		this.setCompanyId(SecurityContextHolder.getContext().getAuthentication().getName());
 	}
 
 	public PurchaseOrder(Long id) {
 		this.id = id;
+
 	}
 
 	public PurchaseOrder() {
@@ -234,7 +239,15 @@ public class PurchaseOrder {
 				+ discount + ", orderDate=" + orderDate + ", dueDate="
 				+ dueDate + ", createdDate=" + createdDate + ", modifiedDate="
 				+ modifiedDate + ", createadBy=" + createadBy + ", modifiedBy="
-				+ modifiedBy + /*", customer=" + customer + ", items=" + items
-				+ ", charges=" + charges + ", taxes=" + taxes +*/ "]";
+				+ modifiedBy + ", customer=" + customer + ", items=" + items
+				+ ", charges=" + charges + ", taxes=" + taxes + "]";
+	}
+
+	public String getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(String companyId) {
+		this.companyId = companyId;
 	}
 }

@@ -15,8 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.jroche.persistence.model.user.Company;
 import org.jroche.persistence.model.user.Customer;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @Entity(name = "salesOrder")
 public class SalesOrder {
@@ -43,14 +43,12 @@ public class SalesOrder {
 	private Date modifiedDate;
 	private int createadBy;
 	private int modifiedBy;
+	
+	private String companyId;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "accountId")
 	private Customer user;
-	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "companyId")
-	private Company companyId;
 
 	@OneToMany(mappedBy = "so", fetch = FetchType.LAZY)
 	private Set<SalesOrderItems> items;
@@ -64,11 +62,10 @@ public class SalesOrder {
 	public SalesOrder(Long id, String orderId, String orderType,
 			String comments, String referenceNumber, int discount,
 			Date orderDate, Date dueDate, Date createdDate, Date modifiedDate,
-			int createadBy, int modifiedBy, Customer user, Company company,
+			int createadBy, int modifiedBy, Customer user, 
 			Set<SalesOrderItems> items, Set<SalesOrderCharges> charges,
 			Set<SalesOrderTaxes> taxes) {
 		super();
-		this.companyId = company;
 		this.id = id;
 		this.orderId = orderId;
 		this.orderType = orderType;
@@ -85,6 +82,7 @@ public class SalesOrder {
 		this.items = items;
 		this.charges = charges;
 		this.taxes = taxes;
+		this.setCompanyId(SecurityContextHolder.getContext().getAuthentication().getName());
 	}
 
 	public SalesOrder(Long id) {
@@ -198,12 +196,12 @@ public class SalesOrder {
 		this.user = user;
 	}
 	
-	public Company getCompany() {
+	public String getCompanyId() {
 		return companyId;
 	}
 
-	public void setCompany(Company company) {
-		this.companyId = company;
+	public void setCompanyId(String companyId) {
+		this.companyId = companyId;
 	}
 
 	public Set<SalesOrderItems> getItems() {
@@ -240,13 +238,13 @@ public class SalesOrder {
 
 	@Override
 	public String toString() {
-		return "PurchaseOrder [id=" + id + ", companyId=" + companyId + "orderId=" + orderId
+		return "PurchaseOrder [id=" + id + "orderId=" + orderId
 				+ ", orderType=" + orderType + ", comments=" + comments
 				+ ", referenceNumber=" + referenceNumber + ", discount="
 				+ discount + ", orderDate=" + orderDate + ", dueDate="
 				+ dueDate + ", createdDate=" + createdDate + ", modifiedDate="
 				+ modifiedDate + ", createadBy=" + createadBy + ", modifiedBy="
-/*				+ modifiedBy + ", user=" + user + ", items=" + items
-				+ ", charges=" + charges + ", taxes=" + taxes */ + "]";
+				+ modifiedBy + ", user=" + user + ", items=" + items
+				+ ", charges=" + charges + ", taxes=" + taxes + "]";
 	}
 }

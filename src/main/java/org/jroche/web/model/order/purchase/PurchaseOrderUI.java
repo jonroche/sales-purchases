@@ -3,6 +3,8 @@ package org.jroche.web.model.order.purchase;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+
 public class PurchaseOrderUI {
 	private Long id;
 	private String orderId;
@@ -21,6 +23,7 @@ public class PurchaseOrderUI {
 	private List<PurchaseOrderItemsUI> purchasedItems;
 	private List<PurchaseOrderChargesUI> charges;
 	private List<PurchaseOrderTaxesUI> taxes;
+	private String companyId;
 
 	public PurchaseOrderUI(Long id, String orderId, String orderType,
 			String comments, String referenceNumber, int discount,
@@ -28,7 +31,7 @@ public class PurchaseOrderUI {
 			int createadBy, int modifiedBy, String userName,
 			List<PurchaseOrderItemsUI> items,
 			List<PurchaseOrderChargesUI> charges,
-			List<PurchaseOrderTaxesUI> taxes) {
+			List<PurchaseOrderTaxesUI> taxes, String companyId) {
 		super();
 		this.id = id;
 		this.orderId = orderId;
@@ -46,10 +49,11 @@ public class PurchaseOrderUI {
 		this.purchasedItems = items;
 		this.charges = charges;
 		this.taxes = taxes;
+		this.companyId = companyId;
 	}
 
 	public PurchaseOrderUI() {
-
+		this.companyId = SecurityContextHolder.getContext().getAuthentication().getName();
 	}
 
 	public Long getId() {
@@ -186,6 +190,14 @@ public class PurchaseOrderUI {
 
 	public void setTotal(long total) {
 		this.total = total;
+	}
+	
+	public String getCompanyId() {
+		return companyId;
+	}
+	
+	public void setCompanyId(String companyId) {
+		this.companyId = companyId;
 	}
 
 	@Override

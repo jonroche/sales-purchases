@@ -40,6 +40,8 @@ public class Customer {
 	private String email;
 	private String description;
 	private String notes;
+	
+	private String companyId;
 
 	@Temporal(TemporalType.DATE)
 	private Date createdDate;
@@ -61,10 +63,6 @@ public class Customer {
 
 	@OneToOne(mappedBy = "customer", fetch = FetchType.EAGER)
 	private UserBalance balance;
-	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "companyId")
-	private Company companyId;
 
 	public static enum COLUMNS {
 		USERNAME, PASSWORD, FIRSTNAME, LASTNAME, ACCOUNTTYPE, BILLINGADDRESS, MOBILEPHONE, OFFICEPHONE, EMAIL, DESCRIPTION, NOTES, CREATEDBY, CREATEDDATE, MODIFIEDBY, MODIFIEDDATE, LASTLOGGEDIN, COMPANYID
@@ -73,7 +71,7 @@ public class Customer {
 	public Customer(Long id, String username, String password, String firstName,
 			String lastName, String accountType, String billingAddress,
 			String mobilePhone, String officePhone, String email,
-			String description, String notes, Role role) {
+			String description, String notes, Role role, String companyId) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -88,6 +86,7 @@ public class Customer {
 		this.description = description;
 		this.notes = notes;
 		this.role = role;
+		this.companyId = companyId;
 	}
 
 	public Customer() {
@@ -261,6 +260,14 @@ public class Customer {
 	public void setBalance(UserBalance balance) {
 		this.balance = balance;
 	}
+	
+	public String getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(String companyId) {
+		this.companyId = companyId;
+	}
 
 	public String toString() {
 		StringBuffer result = new StringBuffer();
@@ -282,6 +289,7 @@ public class Customer {
 		result.append(" createadBy:" + createadBy);
 		result.append(" modifiedBy:" + modifiedBy);
 		result.append(" lastLoggedIn:" + lastLoggedIn);
+		result.append(" companyId:" + companyId);
 
 		return result.toString();
 	}

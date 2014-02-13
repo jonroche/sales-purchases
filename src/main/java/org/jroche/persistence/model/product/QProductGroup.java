@@ -25,6 +25,8 @@ public class QProductGroup extends EntityPathBase<ProductGroup> {
     public final StringPath description = createString("description");
 
     public final StringPath groupName = createString("groupName");
+    
+    public final StringPath companyId = createString("companyId");
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 

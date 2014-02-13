@@ -8,6 +8,7 @@ import org.jroche.web.model.product.ProductGroupUI;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 public class ProductGroupMapper {
 	public ProductGroupUI toUIBean(ProductGroup group) {
@@ -22,6 +23,7 @@ public class ProductGroupMapper {
 			ui.setModifiedBy(group.getModifiedBy());
 			ui.setModifiedDate(group.getModifiedDate());
 			ui.setGroupName(group.getGroupName());
+			ui.setCompanyId(SecurityContextHolder.getContext().getAuthentication().getName());
 		}
 
 		return ui;
@@ -58,7 +60,7 @@ public class ProductGroupMapper {
 			group.setModifiedBy(ui.getModifiedBy());
 			group.setModifiedDate(ui.getModifiedDate());
 			group.setGroupName(ui.getGroupName());
-
+			group.setCompanyId(SecurityContextHolder.getContext().getAuthentication().getName());
 		}
 		return group;
 	}

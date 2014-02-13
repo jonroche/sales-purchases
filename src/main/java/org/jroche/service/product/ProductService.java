@@ -147,6 +147,13 @@ public class ProductService {
 								+ filter.getValue() + "%");
 					}
 					break;
+				case COMPANYID:
+					if (filter.getValue() != null
+							&& !"".equals(filter.getValue())) {
+						expression = product.companyId.like("%"
+								+ filter.getValue() + "%");
+					}
+					break;
 				}
 				if (expression != null) {
 					if (result != null) {

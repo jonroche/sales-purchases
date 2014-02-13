@@ -25,6 +25,8 @@ public class QUserPayment extends EntityPathBase<UserPayment> {
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final StringPath notes = createString("notes");
+    
+    public final StringPath companyId = createString("companyId");
 
     public final DateTimePath<java.util.Date> paymentDate = createDateTime("paymentDate", java.util.Date.class);
 

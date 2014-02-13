@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+
 @Entity(name = "productGroup")
 public class ProductGroup {
 	@Id
@@ -30,12 +32,13 @@ public class ProductGroup {
 	private Date modifiedDate;
 	private int createadBy;
 	private int modifiedBy;
+	private String companyId;
 
 	@OneToMany(mappedBy = "group" , fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	private Set<Product> product;
 	
 	public static enum COLUMNS {
-		GROUPNAME, DESCRIPTION, CREATEDBY, CREATEDDATE, MODIFIEDBY, MODIFIEDDATE
+		GROUPNAME, DESCRIPTION, CREATEDBY, CREATEDDATE, MODIFIEDBY, MODIFIEDDATE, COMPANYID
 	}
 
 	public ProductGroup(Long id, String groupName, String description,
@@ -48,6 +51,7 @@ public class ProductGroup {
 		this.modifiedDate = modifiedDate;
 		this.createadBy = createadBy;
 		this.modifiedBy = modifiedBy;
+		this.companyId = SecurityContextHolder.getContext().getAuthentication().getName();
 	}
 
 	public ProductGroup(String groupName, String description) {
@@ -122,6 +126,14 @@ public class ProductGroup {
 
 	public void setProduct(Set<Product> product) {
 		this.product = product;
+	}
+	
+	public String getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(String companyId) {
+		this.companyId = companyId;
 	}
 
 	@Override

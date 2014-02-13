@@ -13,6 +13,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.jroche.persistence.model.user.Customer;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @Entity(name = "userPayments")
 public class UserPayment {
@@ -30,9 +31,11 @@ public class UserPayment {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "accountId")
 	private Customer customer;
+	
+	private String companyId;
 
 	public static enum COLUMNS {
-		PRODUCTNAME, DESCRIPTION, PRODUCTGROUP, PRICE, CREATEDBY, CREATEDDATE, MODIFIEDBY, MODIFIEDDATE
+		PRODUCTNAME, DESCRIPTION, PRODUCTGROUP, PRICE, CREATEDBY, CREATEDDATE, MODIFIEDBY, MODIFIEDDATE, COMPANYID
 	}
 
 	public UserPayment(Long id, String notes, String paymentType, int amount,
@@ -44,6 +47,7 @@ public class UserPayment {
 		this.amount = amount;
 		this.paymentDate = paymentDate;
 		this.customer = customer;
+		this.companyId = SecurityContextHolder.getContext().getAuthentication().getName();
 	}
 
 	public UserPayment() {
@@ -96,6 +100,14 @@ public class UserPayment {
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
+	}
+	
+	public String getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(String companyId) {
+		this.companyId = companyId;
 	}
 
 	@Override

@@ -6,8 +6,8 @@ import org.apache.log4j.Logger;
 import org.jroche.common.util.extjs.FilterRequest;
 import org.jroche.common.util.mapper.company.CompanyMapper;
 import org.jroche.persistence.model.user.Company;
-import org.jroche.persistence.model.user.QCustomer;
-import org.jroche.persistence.model.user.Customer.COLUMNS;
+import org.jroche.persistence.model.user.Company.COLUMNS;
+import org.jroche.persistence.model.user.QCompany;
 import org.jroche.persistence.repo.company.CompanyRepository;
 import org.jroche.web.model.user.CompanyUI;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +63,7 @@ public class CompanyService {
 
 	private Predicate toPredicate(final List<FilterRequest> filters) {
 		logger.info("Entering predicates :: " + filters);
-		QCustomer user = QCustomer.user;
+		QCompany company = QCompany.company;
 		BooleanExpression result = null;
 
 		try {
@@ -74,30 +74,16 @@ public class CompanyService {
 				BooleanExpression expression = null;
 
 				switch (column) {
-				case USERNAME:
+				case COMPANYNAME:
 					if (filter.getValue() != null
 							&& !"".equals(filter.getValue())) {
-						expression = user.username.like(filter.getValue());
+						expression = company.companyName.like(filter.getValue());
 					}
 					break;
-				case FIRSTNAME:
+				case COMPANYID:
 					if (filter.getValue() != null
 							&& !"".equals(filter.getValue())) {
-						expression = user.firstName.like("%"
-								+ filter.getValue() + "%");
-					}
-					break;
-				case LASTNAME:
-					if (filter.getValue() != null
-							&& !"".equals(filter.getValue())) {
-						expression = user.lastName.like("%" + filter.getValue()
-								+ "%");
-					}
-					break;
-				case ACCOUNTTYPE:
-					if (filter.getValue() != null
-							&& !"".equals(filter.getValue())) {
-						expression = user.accountType.like("%"
+						expression = company.companyId.like("%"
 								+ filter.getValue() + "%");
 					}
 					break;

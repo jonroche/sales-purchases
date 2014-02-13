@@ -118,6 +118,13 @@ public class ProductGroupService {
 								+ filter.getValue() + "%");
 					}
 					break;
+				case COMPANYID:
+					if (filter.getValue() != null
+							&& !"".equals(filter.getValue())) {
+						expression = group.companyId.like("%"
+								+ filter.getValue() + "%");
+					}
+					break;
 				}
 				if (expression != null) {
 					if (result != null) {

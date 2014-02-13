@@ -134,7 +134,15 @@ public class UserService {
 								+ filter.getValue() + "%");
 					}
 					break;
+				
+				case COMPANYID:
+				if (filter.getValue() != null
+						&& !"".equals(filter.getValue())) {
+					expression = user.companyId.like("%"
+							+ filter.getValue() + "%");
 				}
+				break;
+			}
 				if (expression != null) {
 					if (result != null) {
 						result = result.and(expression);

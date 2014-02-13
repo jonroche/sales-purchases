@@ -1,11 +1,16 @@
 package org.jroche.persistence.model.user;
 
-import static com.mysema.query.types.PathMetadataFactory.*;
-
-import com.mysema.query.types.*;
-import com.mysema.query.types.path.*;
+import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 import javax.annotation.Generated;
+
+import com.mysema.query.types.PathMetadata;
+import com.mysema.query.types.path.DateTimePath;
+import com.mysema.query.types.path.EntityPathBase;
+import com.mysema.query.types.path.NumberPath;
+import com.mysema.query.types.path.PathInits;
+import com.mysema.query.types.path.SetPath;
+import com.mysema.query.types.path.StringPath;
 
 
 /**
@@ -47,6 +52,9 @@ public class QCompany extends EntityPathBase<Company> {
     public final StringPath password = createString("password");
 
     public final StringPath companyId = createString("companyId");
+    
+    public final SetPath<Customer, QCustomer> customer = this.<Customer, QCustomer>createSet("customer", Customer.class, QCustomer.class);
+
 
     public QCompany(String variable) {
         this(Company.class, forVariable(variable), INITS);

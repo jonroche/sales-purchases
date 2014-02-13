@@ -15,7 +15,9 @@ import org.jroche.common.util.mapper.order.purchase.PurchaseOrderItemsMapper;
 import org.jroche.common.util.mapper.order.purchase.PurchaseOrderMapper;
 import org.jroche.persistence.model.order.purchase.PurchaseOrder;
 import org.jroche.persistence.model.order.purchase.PurchaseOrderItems;
+import org.jroche.persistence.model.order.purchase.QPurchaseOrder;
 import org.jroche.persistence.model.product.Product;
+import org.jroche.persistence.model.product.QProductGroup;
 import org.jroche.persistence.model.user.Customer;
 import org.jroche.persistence.repo.order.purchase.PurchaseOrderItemsRepository;
 import org.jroche.persistence.repo.order.purchase.PurchaseOrderRepository;
@@ -28,10 +30,12 @@ import org.jroche.web.model.order.purchase.PurchaseOrderUI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mysema.query.types.Predicate;
+import com.mysema.query.types.expr.BooleanExpression;
 
 @Service
 public class PurchaseOrderService {
@@ -196,31 +200,78 @@ public class PurchaseOrderService {
 	public Boolean delete(PurchaseOrderUI uiBean) {
 		return true;
 	}
+	
+	public static enum COLUMNS {
+		COMPANYID
+	}
 
 	private Predicate toPredicate(final List<FilterRequest> filters) {
-		return null;
+		logger.info("Entering predicates :: " + filters);
+
+		QPurchaseOrder order = QPurchaseOrder.purchaseOrder;
+		BooleanExpression result = null;
+
+		try {
+			for (FilterRequest filter : filters) {
+
+				COLUMNS column = COLUMNS.valueOf(filter.getProperty()
+						.toUpperCase());
+				BooleanExpression expression = null;
+
+				switch (column) {
+				case COMPANYID:
+					if (filter.getValue() != null
+							&& !"".equals(filter.getValue())) {
+						expression = order.companyId.like("%"
+								+ filter.getValue() + "%");
+					}
+					break;
+				}
+				if (expression != null) {
+					if (result != null) {
+						result = result.and(expression);
+					} else {
+						result = expression;
+					}
+				}
+			}
+		} catch (Exception ex) {
+			logger.error(ex);
+		}
+		logger.info("Result Predicate :: "
+				+ (result != null ? result.toString() : ""));
+
+		logger.info("Exiting predicates");
+		return result;
 	}
 
 	public List<TransactionAmountSummary> monthlyPurchases(int month, int year) {
 
-		String query = "select new org.jroche.web.model.order.TransactionAmountSummary(day(orderDate), sum(total)) "
-				+ " from purchaseOrder where month(orderDate) = " + month + " and " + " year(orderDate) = " + year + " group by orderDate";
+		String query = "select new org.jroche.web.model.order.TransactionAmountSummary(p.companyId,day(orderDate), sum(total)) "
+				+ " from purchaseOrder p where month(orderDate) = " + month + 
+				" and " + " year(orderDate) = " + year + 
+				" and " + " p.companyId = \'" + SecurityContextHolder.getContext().getAuthentication().getName() + "\'" +
+				" group by orderDate,p.companyId";
 
 		return entityManager.createQuery(query).getResultList();
 	}
 
 	public List<TransactionAmountSummary> yearlyPurchases(int year) {
 
-		String query = "select new org.jroche.web.model.order.TransactionAmountSummary(month(orderDate), sum(total)) "
-				+ " from purchaseOrder where year(orderDate) = " + year + " group by month(orderDate)";
+		String query = "select new org.jroche.web.model.order.TransactionAmountSummary(p.companyId, month(orderDate), sum(total)) "
+				+ " from purchaseOrder p where year(orderDate) = " + year + 
+				" and " + " p.companyId = \'" + SecurityContextHolder.getContext().getAuthentication().getName() + "\'" +
+				" group by month(orderDate),p.companyId";
 
 		return entityManager.createQuery(query).getResultList();
 	}
 
 	public List<TransactionAmountSummary> allYearPurchases() {
 
-		String query = "select new org.jroche.web.model.order.TransactionAmountSummary(year(orderDate), sum(total)) "
-				+ " from purchaseOrder " + " group by year(orderDate)";
+		String query = "select new org.jroche.web.model.order.TransactionAmountSummary(p.companyId, year(orderDate), sum(total)) "
+				+ " from purchaseOrder p " + 
+				" where " + " p.companyId = \'" + SecurityContextHolder.getContext().getAuthentication().getName() + "\'" +
+				" group by year(orderDate),p.companyId";
 
 		return entityManager.createQuery(query).getResultList();
 	}

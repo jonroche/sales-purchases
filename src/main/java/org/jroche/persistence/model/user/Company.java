@@ -1,12 +1,16 @@
 package org.jroche.persistence.model.user;
 
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -48,6 +52,9 @@ public class Company {
 	private int modifiedBy;
 	@Temporal(TemporalType.DATE)
 	private Date lastLoggedIn;
+	
+	/*@OneToMany(mappedBy = "customer" , fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+	private Set<Customer> customer;*/
 
 	public static enum COLUMNS {
 		COMPANYID, PASSWORD, COMPANYNAME, COMPANYADDRESS, COMPANYPHONE, EMAIL, DESCRIPTION, NOTES, CREATEDBY, CREATEDDATE, MODIFIEDBY, MODIFIEDDATE, LASTLOGGEDIN,
@@ -279,11 +286,11 @@ public class Company {
 	}
 	
 	/*public Set<Customer> getCustomers() {
-		return customers;
+		return customer;
 	}
 
-	public void setCustomers(Set<Customer> customers) {
-		this.customers = customers;
+	public void setCustomers(Set<Customer> customer) {
+		this.customer = customer;
 	}*/
 
 	public String toString() {

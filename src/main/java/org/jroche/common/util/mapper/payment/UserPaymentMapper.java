@@ -10,6 +10,7 @@ import org.jroche.web.model.payments.UserPaymentUI;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 public class UserPaymentMapper {
 
@@ -28,6 +29,7 @@ public class UserPaymentMapper {
 			if (data.getCustomer() != null) {
 				uiBean.setUserName(data.getCustomer().getUsername());
 			}
+			uiBean.setCompanyId(SecurityContextHolder.getContext().getAuthentication().getName());
 		}
 
 		logger.debug("Payment is :: " + uiBean);
@@ -67,6 +69,7 @@ public class UserPaymentMapper {
 			Customer customer = new Customer();
 			customer.setUsername(uiBean.getUserName());
 			data.setCustomer(customer);
+			data.setCompanyId(SecurityContextHolder.getContext().getAuthentication().getName());
 		}
 		return data;
 	}

@@ -9,6 +9,7 @@ import org.jroche.web.model.product.ProductUI;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 public class ProductMapper {
 
@@ -28,6 +29,7 @@ public class ProductMapper {
 				uiBean.setProductGroup(product.getGroup().getGroupName());
 			}
 			uiBean.setProductName(product.getProductName());
+			uiBean.setCompanyId(SecurityContextHolder.getContext().getAuthentication().getName());
 		}
 
 		return uiBean;
@@ -68,6 +70,7 @@ public class ProductMapper {
 			ProductGroup group = new ProductGroup();
 			group.setGroupName(uiBean.getProductGroup());
 			product.setGroup(group);
+			product.setCompanyId(SecurityContextHolder.getContext().getAuthentication().getName());
 
 		}
 		return product;

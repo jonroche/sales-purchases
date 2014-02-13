@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -66,6 +67,8 @@ public class PurchaseOrderController {
 			Page<PurchaseOrderUI> purchases = null;
 
 			List<FilterRequest> filters = new ArrayList<FilterRequest>();
+			filters.add(new FilterRequest("companyId", 
+					SecurityContextHolder.getContext().getAuthentication().getName()));
 
 			if (filter != null) {
 				logger.debug("Processing Filters!");

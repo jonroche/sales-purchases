@@ -9,7 +9,6 @@ import org.jroche.persistence.model.order.sales.SalesOrder;
 import org.jroche.persistence.model.order.sales.SalesOrderCharges;
 import org.jroche.persistence.model.order.sales.SalesOrderItems;
 import org.jroche.persistence.model.order.sales.SalesOrderTaxes;
-import org.jroche.persistence.model.user.Company;
 import org.jroche.persistence.model.user.Customer;
 import org.jroche.web.model.order.sales.SalesOrderUI;
 import org.springframework.data.domain.Page;
@@ -36,6 +35,7 @@ public class SalesOrderMapper {
 			ui.setReferenceNumber(data.getReferenceNumber());
 			ui.setUserName(data.getUser().getUsername());
 			ui.setTotal(data.getTotal());
+			ui.setCompanyId(SecurityContextHolder.getContext().getAuthentication().getName());
 
 		}
 
@@ -76,9 +76,8 @@ public class SalesOrderMapper {
 			Customer user = new Customer();
 			user.setUsername(ui.getUserName());
 			data.setUser(user);
-			Company company = new Company();
-			company.setCompanyId(SecurityContextHolder.getContext().getAuthentication().getName());
-			data.setCompany(company);
+			data.setCompanyId(SecurityContextHolder.getContext().getAuthentication().getName());
+
 
 			if (ui.getCharges() != null && ui.getCharges().size() > 0) {
 				SalesOrderChargesMapper chargeMapper = new SalesOrderChargesMapper();

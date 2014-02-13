@@ -8,12 +8,13 @@ import org.apache.log4j.Logger;
 import org.jroche.common.util.extjs.FilterRequest;
 import org.jroche.common.util.extjs.JsonUtils;
 import org.jroche.common.util.extjs.ResponseMap;
-import org.jroche.common.util.mapper.payment.UserPaymentMapper;
 import org.jroche.service.payments.PaymentService;
 import org.jroche.web.model.payments.UserPaymentUI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,17 +46,20 @@ public class UserPaymentsController {
 			@RequestParam int start, @RequestParam int limit,
 			@RequestParam(required = false) Object filter) throws Exception {
 		try {
-			
+			Pageable pageable = new PageRequest(page - 1, limit);
 			Page<UserPaymentUI> payments = null;
 
 			List<FilterRequest> filters = new ArrayList<FilterRequest>();
+			
+			filters.add(new FilterRequest("companyId", 
+					SecurityContextHolder.getContext().getAuthentication().getName()));
 
 			if (filter != null) {
 				logger.debug("Processing Filters!");
 				filters.addAll(JsonUtils.getListFromJsonArray((String) filter));
 			}
 
-			payments = new PageImpl<UserPaymentUI>(service.findAll());
+			payments = service.findAll(pageable, filters);
 			long total = payments.getTotalElements();
 			logger.debug("products : " + payments.getContent());
 

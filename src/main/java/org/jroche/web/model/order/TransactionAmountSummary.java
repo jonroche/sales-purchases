@@ -3,13 +3,15 @@ package org.jroche.web.model.order;
 public class TransactionAmountSummary {
 	private String day;
 	private long amount;
+	private String companyId;
 
 	public TransactionAmountSummary() {
 	}
 
-	public TransactionAmountSummary(int day, long amount) {
+	public TransactionAmountSummary(String companyId, int day, long amount) {
 		this.day = Integer.toString(day);
 		this.amount = amount;
+		this.companyId = companyId;
 	}
 
 	public String getDay() {
@@ -26,6 +28,14 @@ public class TransactionAmountSummary {
 
 	public void setAmount(long amount) {
 		this.amount = amount;
+	}
+
+	public String getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(String companyId) {
+		this.companyId = companyId;
 	}
 
 }

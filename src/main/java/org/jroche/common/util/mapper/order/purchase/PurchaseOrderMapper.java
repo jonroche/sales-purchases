@@ -14,6 +14,7 @@ import org.jroche.web.model.order.purchase.PurchaseOrderUI;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 public class PurchaseOrderMapper {
 	public PurchaseOrderUI toUIBean(PurchaseOrder data) {
@@ -34,6 +35,7 @@ public class PurchaseOrderMapper {
 			ui.setReferenceNumber(data.getReferenceNumber());
 			ui.setUserName(data.getCustomer().getUsername());
 			ui.setTotal(data.getTotal());
+			ui.setCompanyId(SecurityContextHolder.getContext().getAuthentication().getName());
 
 		}
 
@@ -71,6 +73,7 @@ public class PurchaseOrderMapper {
 			data.setOrderId(ui.getOrderId());
 			data.setOrderType(ui.getOrderType());
 			data.setReferenceNumber(ui.getReferenceNumber());
+			data.setCompanyId(SecurityContextHolder.getContext().getAuthentication().getName());
 
 			Customer customer = new Customer();
 			customer.setUsername(ui.getUserName());

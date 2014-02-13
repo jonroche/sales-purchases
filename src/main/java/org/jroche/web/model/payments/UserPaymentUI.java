@@ -2,6 +2,8 @@ package org.jroche.web.model.payments;
 
 import java.util.Date;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+
 public class UserPaymentUI {
 	private Long id;
 	private String notes;
@@ -9,9 +11,10 @@ public class UserPaymentUI {
 	private int amount;
 	private Date paymentDate;
 	private String userName;
+	private String companyId;
 
 	public UserPaymentUI(Long id, String notes, String paymentType, int amount,
-			Date paymentDate, String userName) {
+			Date paymentDate, String userName, String companyId) {
 		super();
 		this.id = id;
 		this.notes = notes;
@@ -19,10 +22,11 @@ public class UserPaymentUI {
 		this.amount = amount;
 		this.paymentDate = paymentDate;
 		this.userName = userName;
+		this.companyId = companyId;
 	}
 
 	public UserPaymentUI() {
-
+		this.companyId = SecurityContextHolder.getContext().getAuthentication().getName();
 	}
 
 	public Long getId() {
@@ -71,6 +75,14 @@ public class UserPaymentUI {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+	
+	public String getCompanyId() {
+		return companyId;
+	}
+	
+	public void setCompanyId(String companyId) {
+		this.companyId = companyId;
 	}
 
 	@Override

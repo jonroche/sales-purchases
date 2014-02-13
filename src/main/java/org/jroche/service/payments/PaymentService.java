@@ -3,15 +3,23 @@ package org.jroche.service.payments;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.jroche.common.util.extjs.FilterRequest;
 import org.jroche.common.util.mapper.payment.UserPaymentMapper;
+import org.jroche.persistence.model.payments.QUserPayment;
 import org.jroche.persistence.model.payments.UserPayment;
+import org.jroche.persistence.model.product.Product.COLUMNS;
 import org.jroche.persistence.model.user.Customer;
 import org.jroche.persistence.repo.payments.UserPaymentRepository;
 import org.jroche.persistence.repo.user.UserRepository;
 import org.jroche.web.model.payments.UserPaymentUI;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.mysema.query.types.Predicate;
+import com.mysema.query.types.expr.BooleanExpression;
 
 @Service
 public class PaymentService {
@@ -48,8 +56,12 @@ public class PaymentService {
 		return mapper.toUIBean(repository.findById(paymentId));
 	}
 
-	public List<UserPaymentUI> findAll() {
-		return mapper.toUIBean(repository.findAll());
+	public Page<UserPaymentUI> findAll(Pageable pageable,
+			List<FilterRequest> filters) {
+
+		Predicate predicate = toPredicate(filters);
+		return mapper.toUIBean(repository.findAll(predicate, pageable),
+				pageable);
 	}
 
 	public List<UserPaymentUI> findByUser(String userName) {
@@ -88,5 +100,45 @@ public class PaymentService {
 
 		repository.delete(existing);
 		return true;
+	}
+	
+	private Predicate toPredicate(final List<FilterRequest> filters) {
+		logger.info("Entering predicates :: " + filters);
+
+		QUserPayment payment = QUserPayment.userPayment;
+		BooleanExpression result = null;
+
+		try {
+			for (FilterRequest filter : filters) {
+
+				COLUMNS column = COLUMNS.valueOf(filter.getProperty()
+						.toUpperCase());
+				BooleanExpression expression = null;
+
+				switch (column) {
+				case COMPANYID:
+					if (filter.getValue() != null
+							&& !"".equals(filter.getValue())) {
+						expression = payment.companyId.like("%"
+								+ filter.getValue() + "%");
+					}
+					break;
+				}
+				if (expression != null) {
+					if (result != null) {
+						result = result.and(expression);
+					} else {
+						result = expression;
+					}
+				}
+			}
+		} catch (Exception ex) {
+			logger.error(ex);
+		}
+		logger.info("Result Predicate :: "
+				+ (result != null ? result.toString() : ""));
+
+		logger.info("Exiting predicates");
+		return result;
 	}
 }

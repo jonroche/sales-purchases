@@ -37,6 +37,10 @@ public class UserMapper {
 			if (user.getBalance() != null) {
 				uiBean.setBalance(user.getBalance().getAmount());
 			}
+			
+			if (user.getCompanyId() != null) {
+				uiBean.setCompanyId(user.getCompanyId());
+			}
 		}
 
 		return uiBean;
@@ -81,6 +85,7 @@ public class UserMapper {
 			user.setModifiedDate(uiBean.getModifiedDate());
 			user.setNotes(uiBean.getNotes());
 			user.setOfficePhone(uiBean.getOfficePhone());
+			user.setCompanyId(uiBean.getCompanyId());
 		}
 		return user;
 	}

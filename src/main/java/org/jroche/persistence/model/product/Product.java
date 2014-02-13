@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+
 @Entity(name = "product")
 public class Product {
 
@@ -32,13 +34,15 @@ public class Product {
 	private Date modifiedDate;
 	private int createadBy;
 	private int modifiedBy;
+	
+	private String companyId;
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="productGroup")
 	private ProductGroup group;
 	
 	public static enum COLUMNS {
-		PRODUCTNAME, DESCRIPTION, PRODUCTGROUP, PRICE, CREATEDBY, CREATEDDATE, MODIFIEDBY, MODIFIEDDATE
+		PRODUCTNAME, DESCRIPTION, PRODUCTGROUP, PRICE, CREATEDBY, CREATEDDATE, MODIFIEDBY, MODIFIEDDATE, COMPANYID
 	}
 
 	public Product(Long id, String productName, String description, int price,
@@ -54,6 +58,7 @@ public class Product {
 		this.createadBy = createadBy;
 		this.modifiedBy = modifiedBy;
 		this.group = group;
+		this.companyId = SecurityContextHolder.getContext().getAuthentication().getName();
 	}
 
 	public Product(Long id, String productName, String description, int price,
@@ -67,6 +72,7 @@ public class Product {
 		this.modifiedDate = modifiedDate;
 		this.createadBy = createadBy;
 		this.modifiedBy = modifiedBy;
+		this.companyId = SecurityContextHolder.getContext().getAuthentication().getName();
 	}
 
 	public Product() {
@@ -143,6 +149,14 @@ public class Product {
 
 	public void setGroup(ProductGroup group) {
 		this.group = group;
+	}
+	
+	public String getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(String companyId) {
+		this.companyId = companyId;
 	}
 
 	@Override

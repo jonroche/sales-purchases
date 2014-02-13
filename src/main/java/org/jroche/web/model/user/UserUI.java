@@ -2,6 +2,8 @@ package org.jroche.web.model.user;
 
 import java.util.Date;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+
 public class UserUI {
 
 	private Long id;
@@ -26,10 +28,10 @@ public class UserUI {
 	private Date lastLoggedIn;
 
 	private RoleUI role;
-	
-	private long companyId; 
+	private String companyId;
 
 	public UserUI() {
+		this.companyId = SecurityContextHolder.getContext().getAuthentication().getName();
 	}
 
 	public UserUI(Long id, String firstName, String lastName,
@@ -37,7 +39,7 @@ public class UserUI {
 			String billingAddress, String mobilePhone, String officePhone,
 			String email, String description, String notes, Date createdDate,
 			Date modifiedDate, int createadBy, int modifiedBy,
-			Date lastLoggedIn, RoleUI role) {
+			Date lastLoggedIn, RoleUI role, String companyId) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -57,6 +59,7 @@ public class UserUI {
 		this.modifiedBy = modifiedBy;
 		this.lastLoggedIn = lastLoggedIn;
 		this.role = role;
+		this.companyId = companyId;
 	}
 
 	public UserUI(String username) {
@@ -109,6 +112,14 @@ public class UserUI {
 
 	public void setRole(RoleUI role) {
 		this.role = role;
+	}
+	
+	public String getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(String companyId) {
+		this.companyId = companyId;
 	}
 
 	public String getAccountType() {
@@ -236,6 +247,7 @@ public class UserUI {
 		result.append(" createadBy:" + createadBy);
 		result.append(" modifiedBy:" + modifiedBy);
 		result.append(" lastLoggedIn:" + lastLoggedIn);
+		result.append(" companyId:" + companyId);
 		
 		return result.toString();
 	}

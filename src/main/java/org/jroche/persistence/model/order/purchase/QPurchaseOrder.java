@@ -43,6 +43,8 @@ public class QPurchaseOrder extends EntityPathBase<PurchaseOrder> {
     public final DateTimePath<java.util.Date> orderDate = createDateTime("orderDate", java.util.Date.class);
 
     public final StringPath orderId = createString("orderId");
+    
+    public final StringPath companyId = createString("companyId");
 
     public final StringPath orderType = createString("orderType");
 
