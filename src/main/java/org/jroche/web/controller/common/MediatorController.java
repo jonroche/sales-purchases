@@ -9,12 +9,12 @@ public class MediatorController {
 
 	@RequestMapping
 	public String getHomePage() {
-		return "home";
+		return "home/home";
 	}
 	
 	@RequestMapping(value="/home")
 	public String getHomePageUrl() {
-		return "home";
+		return "home/home";
 	}
 	
 	@RequestMapping(value="/test")

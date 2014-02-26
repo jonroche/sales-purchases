@@ -20,8 +20,9 @@ public class Subscription {
 	@Column(unique = true)
 	private boolean sales = false;
 	private boolean purchases = false;
-	private boolean orders = false;
-	private boolean thirdParties = false;
+	private boolean payments = false;
+	private boolean parties = false;
+	private boolean products = false;
 	private String companyId;
 	
 	@Temporal(TemporalType.DATE)
@@ -40,12 +41,14 @@ public class Subscription {
 	public Subscription() {
 	}
 
-	public Subscription(final String companyId, final boolean sales, final boolean purchases, final boolean orders, final boolean thirdParties) {
+	public Subscription(final String companyId, final boolean sales, final boolean purchases, 
+			final boolean payments, final boolean parties, final boolean products) {
 		this.setCompanyId(companyId);
 		this.sales = sales;
 		this.purchases = purchases;
-		this.orders = orders;
-		this.thirdParties = thirdParties;
+		this.payments = payments;
+		this.parties = parties;
+		this.products = products;
 	}
 
 	public Long getId() {
@@ -72,20 +75,28 @@ public class Subscription {
 		this.purchases = purchases;
 	}
 
-	public boolean isOrders() {
-		return orders;
+	public boolean isPayments() {
+		return payments;
 	}
 
-	public void setOrders(boolean orders) {
-		this.orders = orders;
+	public void setPayments(boolean payments) {
+		this.payments = payments;
 	}
 
-	public boolean isThirdParties() {
-		return thirdParties;
+	public boolean isParties() {
+		return parties;
 	}
 
-	public void setThirdParties(boolean thirdParties) {
-		this.thirdParties = thirdParties;
+	public void setParties(boolean parties) {
+		this.parties = parties;
+	}
+	
+	public boolean isProducts() {
+		return products;
+	}
+
+	public void setProducts(boolean products) {
+		this.products = products;
 	}
 
 	public String getCompanyId() {
@@ -102,8 +113,9 @@ public class Subscription {
 		result.append(" companyId:" + companyId);
 		result.append(" sales:" + sales);
 		result.append(" purchases:" + purchases);
-		result.append(" orders:" + orders);
-		result.append(" thirdParties:" + thirdParties);
+		result.append(" payments:" + payments);
+		result.append(" parties:" + parties);
+		result.append(" products:" + products);
 		
 		return result.toString();
 	}

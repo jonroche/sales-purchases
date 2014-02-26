@@ -32,8 +32,9 @@ public class CompanyMapper {
 			uiBean.setNotes(company.getNotes());
 			uiBean.setPurchases(company.isPurchases());
 			uiBean.setSales(company.isSales());
-			uiBean.setOrders(company.isOrders());
-			uiBean.setThirdParties(company.isThirdParties());
+			uiBean.setPayments(company.isPayments());
+			uiBean.setParties(company.isParties());
+			uiBean.setProducts(company.isProducts());
 		}
 
 		return uiBean;
@@ -85,8 +86,9 @@ public class CompanyMapper {
 			
 			company.setSales(uiBean.isSales());
 			company.setPurchases(uiBean.isPurchases());
-			company.setOrders(uiBean.isOrders());
-			company.setThirdParties(uiBean.isThirdParties());
+			company.setPayments(uiBean.isPayments());
+			company.setParties(uiBean.isParties());
+			company.setProducts(uiBean.isProducts());
 		}
 		return company;
 	}

@@ -87,14 +87,15 @@ Ext.onReady(function()
 						items: 
 						[
 							{ fieldLabel: 'Sales', name : 'sales', anchor:'95%', allowBlank : false },
-							{ fieldLabel: 'Purchases', name : 'purchases', anchor:'95%', allowBlank : false }
+							{ fieldLabel: 'Purchases', name : 'purchases', anchor:'95%', allowBlank : false },
+							{ fieldLabel: 'Products', name : 'products', anchor:'95%', allowBlank : false }
 						]
 					},
 					{  columnWidth:.5, border:false, layout: 'anchor', defaultType: 'checkbox',
 						items: 
 						[
-							{ fieldLabel: 'Orders', name : 'orders', anchor:'95%', allowBlank : false },
-							{ fieldLabel: 'Third Parties', name : 'tps', anchor:'95%', allowBlank : false }
+							{ fieldLabel: 'Payments', name : 'payments', anchor:'95%', allowBlank : false },
+							{ fieldLabel: 'Parties', name : 'parties', anchor:'95%', allowBlank : false }
 						]
 					} 
 				]

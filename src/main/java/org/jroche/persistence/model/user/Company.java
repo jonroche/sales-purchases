@@ -41,8 +41,9 @@ public class Company {
 	
 	private Boolean sales = false;
 	private Boolean purchases = false;
-	private Boolean orders = false;
-	private Boolean thirdParties = false;
+	private Boolean payments = false;
+	private Boolean parties = false;
+	private Boolean products = false;
 
 	@Temporal(TemporalType.DATE)
 	private Date createdDate;
@@ -65,7 +66,8 @@ public class Company {
 	public Company(Long id, String companyId, String password,
 			String companyName, String companyAddress, String companyPhone,
 			String email, String description, String notes, final String cardNumber, final String cardName, final String cardType,
-			final String issuDate, final String expDate, final String secCode, final boolean sales, final boolean purchases, final boolean orders, final boolean thirdParties) {
+			final String issuDate, final String expDate, final String secCode, final boolean sales, 
+			final boolean purchases, final boolean payments, final boolean parties, final Boolean products) {
 		super();
 		this.id = id;
 		this.companyId = companyId;
@@ -84,8 +86,9 @@ public class Company {
 		this.secCode = secCode;
 		this.sales = sales;
 		this.purchases = purchases;
-		this.orders = orders;
-		this.thirdParties = thirdParties;
+		this.payments = payments;
+		this.parties = parties;
+		this.products = products;
 	}
 
 	public Company() {
@@ -269,20 +272,28 @@ public class Company {
 		this.purchases = purchases;
 	}
 
-	public boolean isOrders() {
-		return orders;
+	public boolean isPayments() {
+		return payments;
 	}
 
-	public void setOrders(boolean orders) {
-		this.orders = orders;
+	public void setPayments(boolean payments) {
+		this.payments = payments;
 	}
 
-	public boolean isThirdParties() {
-		return thirdParties;
+	public boolean isParties() {
+		return parties;
 	}
 
-	public void setThirdParties(boolean thirdParties) {
-		this.thirdParties = thirdParties;
+	public void setParties(boolean parties) {
+		this.parties = parties;
+	}
+	
+	public boolean isProducts() {
+		return products;
+	}
+
+	public void setProducts(boolean products) {
+		this.products = products;
 	}
 	
 	/*public Set<Customer> getCustomers() {

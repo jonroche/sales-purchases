@@ -1,5 +1,6 @@
 package org.jroche.web.controller.parties;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -56,6 +57,55 @@ public class CompanyController {
 			e.printStackTrace();
 		}
 		return pur;
+	}
+	
+	@RequestMapping(value = "/isPayments", method = RequestMethod.GET)
+	public @ResponseBody String isPayments(Model model) throws Exception {
+		String pur = null;
+		try {
+			pur = String.valueOf(service.findByCompanyName(SecurityContextHolder.getContext().getAuthentication().getName()).isPayments());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return pur;
+	}
+	
+	@RequestMapping(value = "/isParties", method = RequestMethod.GET)
+	public @ResponseBody String isParties(Model model) throws Exception {
+		String pur = null;
+		try {
+			pur = String.valueOf(service.findByCompanyName(SecurityContextHolder.getContext().getAuthentication().getName()).isParties());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return pur;
+	}
+	
+	@RequestMapping(value = "/isProducts", method = RequestMethod.GET)
+	public @ResponseBody String isProducts(Model model) throws Exception {
+		String pur = null;
+		try {
+			pur = String.valueOf(service.findByCompanyName(SecurityContextHolder.getContext().getAuthentication().getName()).isProducts());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return pur;
+	}
+	
+	@RequestMapping(value = "/getSubscription", method = RequestMethod.GET)
+	public @ResponseBody Map<String,String> getSubscription(Model model) throws Exception {
+		final Map<String,String> subscription = new HashMap<String, String>(); 
+		try {
+			CompanyUI company = service.findByCompanyName(SecurityContextHolder.getContext().getAuthentication().getName());
+			subscription.put("isSales", String.valueOf(company.isSales()));
+			subscription.put("isPurchases", String.valueOf(company.isPurchases()));
+			subscription.put("isPayments", String.valueOf(company.isPayments()));
+			subscription.put("isParties", String.valueOf(company.isParties()));
+			subscription.put("isProducts", String.valueOf(company.isProducts()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return subscription;
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)

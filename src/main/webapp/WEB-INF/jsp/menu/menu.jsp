@@ -10,6 +10,9 @@ Ext.onReady(function() {
 	
 	var isSales = 'true';
 	var isPurchases = 'true';
+	var isPayments = 'true';
+	var isParties = 'true';
+	var isProducts = 'true';
 	
 	setSubscription();
 	
@@ -93,20 +96,26 @@ Ext.onReady(function() {
 			});
 	   	}
 		
-		tb.add({
-			text : 'Payments',
-			menu: paymentsMenu
-		});
+		if (isPayments == 'true') { 
+				tb.add({
+				text : 'Payments',
+				menu: paymentsMenu
+			});
+		}
 
-	    tb.add({
-			text : 'Parties',
-	        menu: partiesMenu
-		});
+		if (isParties == 'true') {
+			tb.add({
+				text : 'Parties',
+	        	menu: partiesMenu
+			});
+		}
 
-		tb.add({
-			text : 'Products',
-	        menu: productsMenu
-		});
+		if (isProducts == 'true') {
+			tb.add({
+				text : 'Products',
+	        	menu: productsMenu
+			});
+		}
 		
 		tb.add({
 			text : 'Overview',
@@ -160,11 +169,12 @@ Ext.onReady(function() {
 		
 	}
 	
-	function setSubscription() {
-		setSales();
-	}
+	//function setSubscription() {
+		//setSales();
+		//Subscription();
+	//}
 	
-	function setSales() {
+	/*function setSales() {
 		Ext.Ajax.request ({
 		    url: 'http://localhost:8080/yourbusinesssolutions/company/isSales',
 		    disableCaching: false ,
@@ -187,7 +197,99 @@ Ext.onReady(function() {
 		    asynch: true,
 		    success: function (res) {
 		    	isPurchases = res.responseText;	
+		    	setPayments();
+		    } ,
+		    failure: function () {
+		        console.log ('error');
+		        setPayments();
+		    }
+		    
+		});
+	}
+	
+	function setPayments() {	
+		Ext.Ajax.request ({
+		    url: 'http://localhost:8080/yourbusinesssolutions/company/isPayments',
+		    disableCaching: false ,
+		    asynch: true,
+		    success: function (res) {
+		    	isPayments = res.responseText;	
+		    	setParties();
+		    } ,
+		    failure: function () {
+		        console.log ('error');
+		        setParties();
+		    }
+		    
+		});
+	}
+	
+	function setParties() {	
+		Ext.Ajax.request ({
+		    url: 'http://localhost:8080/yourbusinesssolutions/company/isParties',
+		    disableCaching: false ,
+		    asynch: true,
+		    success: function (res) {
+		    	isParties = res.responseText;	
+		    	setProducts();
+		    } ,
+		    failure: function () {
+		        console.log ('error');
+		        setProducts();
+		    }
+		    
+		});
+	}
+	
+	function setProducts() {	
+		Ext.Ajax.request ({
+		    url: 'http://localhost:8080/yourbusinesssolutions/company/isProducts',
+		    disableCaching: false ,
+		    asynch: true,
+		    success: function (res) {
+		    	isProducts = res.responseText;	
 		    	createMenuBar();
+		    } ,
+		    failure: function () {
+		        console.log ('error');
+		        createMenuBar();
+		    }
+		    
+		});
+	}*/
+	
+	function setSubscription() {	
+		Ext.Ajax.request ({
+		    url: 'http://ybs.cfapps.io/company/getSubscription',
+		    disableCaching: false ,
+		    asynch: true,
+		    success: function (res) {
+		    	var map = JSON.parse(res.responseText);
+		    	for (var key in map) {
+		    		if (key == 'isSales') {
+		    			isSales = map[key];
+		    		} else if (key == 'isPurchases') {
+		    			isPurchases = map[key];
+		    		} else if (key == 'isPayments') {
+		    			isPayments = map[key];
+		    		} else if (key == 'isParties') {
+		    			isParties = map[key];
+		    		} else if (key == 'isProducts') {
+		    			isProducts = map[key];
+		    		} 
+		    	}
+		    	createMenuBar();
+		    	//var obj = res.responseText;
+		    	//for (var key in obj) {
+		    	//    console.log(key + ': ' + obj[key]);
+		    	//}
+		        //Ext.each(res.responseText, function(op) {
+		        //  isPurchases = true;
+		        //});
+		    	//Ext.util.HashMap map = res.responseText;
+		    	//isPurchases = map.get("isPurchases");
+		    	//isSales = map.get("isSales");
+
 		    } ,
 		    failure: function () {
 		        console.log ('error');

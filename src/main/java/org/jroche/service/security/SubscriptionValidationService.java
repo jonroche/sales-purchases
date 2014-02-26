@@ -34,22 +34,31 @@ public class SubscriptionValidationService  {
 		return domainUser.isSales();
 	}
 	
-	public boolean isOrdersEnabled(String username)
+	public boolean isPaymentsEnabled(String username)
 			throws UsernameNotFoundException {
 
 		org.jroche.persistence.model.user.Company domainUser = userRepository
 				.findByCompanyId(username);
 		
-		return domainUser.isOrders();
+		return domainUser.isPayments();
 	}
 	
-	public boolean isThirdPartiesEnabled(String username)
+	public boolean isPartiesEnabled(String username)
 			throws UsernameNotFoundException {
 
 		org.jroche.persistence.model.user.Company domainUser = userRepository
 				.findByCompanyId(username);
 		
-		return domainUser.isThirdParties();
+		return domainUser.isParties();
+	}
+	
+	public boolean isProductsEnabled(String username)
+			throws UsernameNotFoundException {
+
+		org.jroche.persistence.model.user.Company domainUser = userRepository
+				.findByCompanyId(username);
+		
+		return domainUser.isProducts();
 	}
 	
 }
