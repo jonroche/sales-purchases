@@ -19,7 +19,7 @@ Ext.onReady(function()
 {
     Ext.QuickTips.init();
     
-    var paymentType = Ext.create('Ext.data.ArrayStore', {
+    /*var paymentType = Ext.create('Ext.data.ArrayStore', {
         fields: ['Type'],    
         data: [
             [ 'Mastercard' ],
@@ -35,7 +35,7 @@ Ext.onReady(function()
         store: paymentType,
         valueField: 'Type',
         renderTo: Ext.getBody()
-    });
+    });*/
     
 	var companyDetailsForm = Ext.create('Ext.form.Panel',
 	{
