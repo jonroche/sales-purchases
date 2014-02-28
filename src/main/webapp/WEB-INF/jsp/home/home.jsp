@@ -135,7 +135,7 @@ function clearText(field)
 				<img
 					src="<c:url value="/resources/themes/images/icons/tutorials.png" />" />
 				<h2>Tutorials</h2>
-				<p align="justify">Learn the basics about YBS by running the hands-on tutorials.</p>
+				<p align="justify">Learn the basics about Your Business Solutions by running the hands-on tutorials.</p>
 				<br>
 			</div>
 
@@ -153,7 +153,7 @@ function clearText(field)
 				<img
 					src="<c:url value="/resources/themes/images/icons/videos.png" />" />
 				<h2>Videos</h2>
-				<p align="justify">Learn the basics about YBS viewing videos found on the YBS
+				<p align="justify">Learn the basics about Your Business Solutions by viewing videos found on the YBS
 					YouTube channel.</p>
 			</div>
 
@@ -172,7 +172,7 @@ function clearText(field)
 					src="<c:url value="/resources/themes/images/icons/cheatsheets.png" />" />
 				<h2>Quick Guides</h2>
 
-				<p align="justify">View YBS quick reference guides to the YBS application.</p>
+				<p align="justify">View quick reference guides to the Your Business Solutions application.</p>
 				<br>
 			</div>
 
@@ -191,7 +191,7 @@ function clearText(field)
 					src="<c:url value="/resources/themes/images/icons/howto.png" />" />
 				<h2>How-to articles</h2>
 
-				<p align="justify">Learn more advanced features from online how-to articles.</p>
+				<p align="justify">Learn more advanced features of Your Business Solutions from online how-to articles.</p>
 				<br>
 			</div>
 

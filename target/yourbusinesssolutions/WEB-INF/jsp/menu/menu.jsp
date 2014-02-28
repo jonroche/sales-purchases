@@ -117,11 +117,13 @@ Ext.onReady(function() {
 			});
 		}
 		
-		tb.add({
-			text : 'Overview',
-			handler: function() { window.location = "<c:url value="/overview/overview"/>" ;},
-			group : 'theme'
-		});
+		if (isSales == 'true' || isPurchases == 'true') {
+			tb.add({
+				text : 'Overview',
+				handler: function() { window.location = "<c:url value="/overview/overview"/>" ;},
+				group : 'theme'
+			});
+		}
 		
 
 	/* 
